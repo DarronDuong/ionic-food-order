@@ -8,45 +8,65 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'home',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab1/tab1.module').then(m => m.Tab1PageModule)
+              import('../tab-home/tab-home.module').then(m => m.TabHomePageModule)
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'menu',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+              import('../tab-menu/tab-menu.module').then(m => m.TabMenuPageModule)
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'order',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+              import('../tab-order/tab-order.module').then(m => m.TabOrderPageModule)
           }
         ]
       },
+      {
+        path: 'more',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../tab-more/tab-more.module').then(m => m.TabMorePageModule)
+          }
+        ]
+      },
+      // {
+      //   path: 'tab3',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () =>
+      //         import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+      //     }
+      //   ]
+      // },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/home',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/home',
     pathMatch: 'full'
   }
 ];
@@ -55,4 +75,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
