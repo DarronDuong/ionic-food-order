@@ -10,11 +10,11 @@ const routes: Routes = [
     component: TabMenuPage
   },
   {
-    path: 'c/:categoryId',
+    path: ':categoryId',
     loadChildren: () => import('./pages/menu-category/menu-category.module').then(m => m.MenuCategoryPageModule)
   },
   {
-    path: 'c/:categoryId/:itemId',
+    path: ':categoryId/:itemId',
     component: MenuItemComponent
     // loadChildren: () => import('./pages/menu-category/menu-category.module').then(m => m.MenuCategoryPageModule)
   }

@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>menu-item-detail</ion-title>
+    <ion-title>{{ loadedItem?.title }}</ion-title>
     <!-- <ion-buttons slot="primary">
       <ion-button (click)="onRecipeDelete()">
         <ion-icon name="trash" slot="icon-only"></ion-icon>
@@ -15,41 +15,61 @@
 <ion-content>
   <ion-grid no-padding>
     <ion-row>
-      <ion-img [src]="loadedItem?.imageUrl"></ion-img>
+      <ion-thumbnail style="width: 100%; height: 250px;">
+        <img [src]="loadedItem?.imageUrl">
+      </ion-thumbnail>
     </ion-row>
   </ion-grid>
 
-  <ion-item-group>
-    <ion-item-divider>
-      <ion-label>
-        Fruits
-      </ion-label>
-    </ion-item-divider>
+  <ion-toolbar>
+    <ion-buttons slot="start" style="text-align: center;">
+      <ion-fab-button color="primary" size="small" color="secondary" (click)="decrement()">-</ion-fab-button>
+      <ion-label>{{ itemCount }}</ion-label>
+      <ion-fab-button color="primary" size="small" color="secondary" (click)="increment()">+</ion-fab-button>
+    </ion-buttons>
+  </ion-toolbar>
 
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label>
-          <h3>Grapes</h3>
-        </ion-label>
-      </ion-item>
-      <ion-item-options>
-        <ion-item-option>
-          Favorite
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-
-    <ion-item-sliding>
-      <ion-item>
-        <ion-label>
-          <h3>Apples</h3>
-        </ion-label>
-      </ion-item>
-      <ion-item-options>
-        <ion-item-option>
-          Favorite
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-item-group>
+  <ion-list>
+    <div *ngIf="ingredients.length > 0">
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>
+            Add
+          </ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let ingredient of ingredients">
+          <ion-label>
+            <h2>Extra {{ ingredient.title }}</h2>
+            <p>{{ ingredient.price | currency }}</p>
+          </ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="ingredient.isChecked" (click)="toggleIngredient(ingredient)">
+          </ion-checkbox>
+        </ion-item>
+      </ion-item-group>
+      <ion-item-group>
+        <ion-item-divider>
+          <ion-label>
+            Remove
+          </ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let ingredient of ingredients">
+          <ion-label>
+            <h2>No {{ ingredient.title }}</h2>
+          </ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="ingredient.isChecked" (click)="toggleIngredient(ingredient)">
+          </ion-checkbox>
+        </ion-item>
+      </ion-item-group>
+    </div>
+    <ion-item>
+      <ion-label>Notes</ion-label>
+      <ion-textarea placeholder='Enter any specific request...'></ion-textarea>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="full" color="dark" (click)="addToCart()">
+    Add to Cart &nbsp; - &nbsp; {{ itemPrice * itemCount | currency }}
+  </ion-button>
+</ion-footer>
