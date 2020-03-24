@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MenuItem, ItemIngredient, IngredientCategory } from '../models/classes';
 
 @Injectable({
   providedIn: 'root'
@@ -32,14 +33,85 @@ export class MenuService {
     }
   ];
 
-  private menuItem = [
+  private ingredients: ItemIngredient[] = [
+    {
+      ingredientId: 1,
+      title: 'Soy Chicken',
+      category: IngredientCategory.SOY_MEAT,
+      price: 3
+    },
+    {
+      ingredientId: 2,
+      title: 'Soy Beef',
+      category: IngredientCategory.SOY_MEAT,
+      price: 3
+    },
+    {
+      ingredientId: 3,
+      title: 'Soy Duck',
+      category: IngredientCategory.SOY_MEAT,
+      price: 3
+    },
+    {
+      ingredientId: 4,
+      title: 'Tofu',
+      category: IngredientCategory.TOFU,
+      price: 3
+    },
+    {
+      ingredientId: 5,
+      title: 'Broccoli',
+      category: IngredientCategory.VEGETABLE,
+      price: 2
+    },
+    {
+      ingredientId: 6,
+      title: 'Carrot',
+      category: IngredientCategory.VEGETABLE,
+      price: 2
+    },
+    {
+      ingredientId: 7,
+      title: 'Bok Choy',
+      category: IngredientCategory.VEGETABLE,
+      price: 2
+    },
+    {
+      ingredientId: 8,
+      title: 'Bean Sprout',
+      category: IngredientCategory.VEGETABLE,
+      price: 2
+    },
+    {
+      ingredientId: 9,
+      title: 'Rice Noodle',
+      category: IngredientCategory.NOODLES,
+      price: 2
+    },
+    {
+      ingredientId: 10,
+      title: 'Yellow Noodle',
+      category: IngredientCategory.NOODLES,
+      price: 2
+    },
+    {
+      ingredientId: 11,
+      title: 'Rice Vermicelli',
+      category: IngredientCategory.NOODLES,
+      price: 2
+    }
+  ];
+
+  private menuItem: MenuItem[] = [
+    //#region Entree
     {
       id: 1,
       categoryId: 1,
       title: 'Au Lac Spring Rolls',
       imageUrl: 'data:image/jpeg;base64,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',
       amount: 4,
-      price: 7.9
+      price: 7.9,
+      ingredients: []
     },
     {
       id: 2,
@@ -47,7 +119,8 @@ export class MenuService {
       title: 'Spring Rolls',
       imageUrl: 'https://steamykitchen.com/wp-content/uploads/2012/07/chinese-chicken-egg-rolls-recipe-8473.jpg',
       amount: 4,
-      price: 7.9
+      price: 7.9,
+      ingredients: []
     },
     {
       id: 3,
@@ -55,7 +128,8 @@ export class MenuService {
       title: 'Shredded Tofu Rolls (Rice Paper)',
       imageUrl: 'https://www.veganricha.com/wp-content/uploads/2018/08/Vegan-Spring-rolls-with-Peanut-Sauce-veganricha-1560-2.jpg',
       amount: 2,
-      price: 6.9
+      price: 6.9,
+      ingredients: []
     },
     {
       id: 4,
@@ -63,7 +137,8 @@ export class MenuService {
       title: 'Fresh Cold Rolls (Rice Paper)',
       imageUrl: 'https://www.tasteofhome.com/wp-content/uploads/2017/10/Asian-Spring-Rolls_exps29721_CM2043886D08_16_6bC_RMS-696x696.jpg',
       amount: 2,
-      price: 6.9
+      price: 6.9,
+      ingredients: []
     },
     {
       id: 5,
@@ -71,11 +146,79 @@ export class MenuService {
       title: 'Soy Duck Wraps',
       imageUrl: 'https://food-images.files.bbci.co.uk/food/recipes/duckpancakeswithhois_67779_16x9.jpg',
       amount: 4,
-      price: 8.9
-    }
-  ]
+      price: 8.9,
+      ingredients: []
+    },
+    //#endregion
+    //#region Soup
+    {
+      id: 31,
+      categoryId: 3,
+      title: 'Laksa (Spicy)',
+      imageUrl: 'https://cdn77-s3.lazycatkitchen.com/wp-content/uploads/2019/01/vegan-laksa-bowl-800x1200.jpg',
+      amount: null,
+      price: 14.5,
+      ingredients: [1, 4, 5, 6, 7, 8, 10, 11]
+    },
+    {
+      id: 32,
+      categoryId: 3,
+      title: 'Pho Soup (Chicken or Beef)',
+      imageUrl: 'https://www.deliciouseveryday.com/wp-content/uploads/Vegan-Pho-1-7-600x600.jpg',
+      amount: null,
+      price: 13.9,
+      ingredients: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      id: 33,
+      categoryId: 3,
+      title: 'Soy Pork Rice Noodle (Dry/Soup)',
+      imageUrl: 'https://healthynibblesandbits.com/wp-content/uploads/2018/09/Ginger-Miso-Noodle-Soup-1.jpg',
+      amount: null,
+      price: 13.9,
+      ingredients: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      id: 34,
+      categoryId: 3,
+      title: 'Yellow Noodle Soup (Chicken or Duck)',
+      imageUrl: 'https://healthynibblesandbits.com/wp-content/uploads/2018/09/Ginger-Miso-Noodle-Soup-1.jpg',
+      amount: null,
+      price: 13.9,
+      ingredients: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      id: 35,
+      categoryId: 3,
+      title: 'Royal Noodle Soup (Spicy)',
+      imageUrl: 'https://healthynibblesandbits.com/wp-content/uploads/2018/09/Ginger-Miso-Noodle-Soup-1.jpg',
+      amount: null,
+      price: 13.9,
+      ingredients: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      id: 36,
+      categoryId: 3,
+      title: 'Wonton Yellow Noodle Soup',
+      imageUrl: 'https://healthynibblesandbits.com/wp-content/uploads/2018/09/Ginger-Miso-Noodle-Soup-1.jpg',
+      amount: null,
+      price: 13.9,
+      ingredients: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      id: 37,
+      categoryId: 3,
+      title: 'Rice Vermicelli Sald',
+      imageUrl: 'https://healthynibblesandbits.com/wp-content/uploads/2018/09/Ginger-Miso-Noodle-Soup-1.jpg',
+      amount: null,
+      price: 13.9,
+      ingredients: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+
+    //#endregion
+  ];
+
   constructor() { }
-  
 
   getMenuCategories() {
     return this.categories;
@@ -89,7 +232,12 @@ export class MenuService {
     return this.menuItem.filter(i => i.categoryId === categoryId);
   }
 
-  getMenuItem(itemId){
+  getMenuItem(itemId) {
     return this.menuItem.find(c => c.id === itemId);
   }
+
+  getIngredients(ingredientIds: number[]) {
+    return this.ingredients.filter(i => ingredientIds.includes(i.ingredientId));
+  }
+
 }
