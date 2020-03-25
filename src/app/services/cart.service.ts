@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { MenuItem, ShoppingCart, CartItem } from '../models/classes';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,16 @@ import { Subject } from 'rxjs';
 export class CartService {
 
   cartSubject = new Subject<ShoppingCart>();
-  existingCart: ShoppingCart = new ShoppingCart();
+  private existingCart: ShoppingCart = new ShoppingCart();
 
   constructor() { }
 
   addToCart(item: CartItem) {
     this.existingCart.cartItems.push(item);
     this.cartSubject.next(this.existingCart);
+  }
+
+  getCart() {
+    return of(this.existingCart);
   }
 }

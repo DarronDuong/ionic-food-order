@@ -102,7 +102,7 @@ export class MenuService {
     }
   ];
 
-  private menuItem: MenuItem[] = [
+  private menuItems: MenuItem[] = [
     //#region Entree
     {
       id: 1,
@@ -229,11 +229,11 @@ export class MenuService {
   }
 
   getCategoryMenuItems(categoryId) {
-    return this.menuItem.filter(i => i.categoryId === categoryId);
+    return this.menuItems.filter(i => i.categoryId === categoryId);
   }
 
   getMenuItem(itemId) {
-    return this.menuItem.find(c => c.id === itemId);
+    return this.menuItems.find(c => c.id === itemId);
   }
 
   getIngredients(ingredientIds: number[]) {
