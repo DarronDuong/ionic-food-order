@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'tab-more',
     loadChildren: () => import('./tab-more/tab-more.module').then( m => m.TabMorePageModule)
   },
+  {
+    path: 'checkout',
+    loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
+  },
 ];
 @NgModule({
   imports: [
