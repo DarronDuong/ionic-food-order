@@ -4,11 +4,6 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>{{ loadedItem?.title }}</ion-title>
-    <!-- <ion-buttons slot="primary">
-      <ion-button (click)="onRecipeDelete()">
-        <ion-icon name="trash" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
@@ -22,27 +17,49 @@
   </ion-grid>
 
   <ion-toolbar>
-    <ion-buttons slot="start" style="text-align: center;">
-      <ion-fab-button color="primary" size="small" color="secondary" (click)="decrement()">-</ion-fab-button>
-      <ion-label>{{ itemCount }}</ion-label>
-      <ion-fab-button color="primary" size="small" color="secondary" (click)="increment()">+</ion-fab-button>
-    </ion-buttons>
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <ion-label>
+        <h2 style="text-align: center;"> {{ loadedItem?.title}} </h2>
+        <h4 style="text-align: center;"> {{ loadedItem?.price | currency}} </h4>
+      </ion-label>
+      <br />
+    </div>
+    <div style="display: flex; align-items: centerl; justify-content: center;">
+      <ion-buttons>
+        <ion-button slot="icon-only" color="danger" (click)="decrement()">
+          <ion-icon name="remove-circle-outline" size="large"></ion-icon>
+        </ion-button>
+        &nbsp;
+        <ion-label>{{ itemCount }}</ion-label>
+        &nbsp;
+        <ion-button slot="icon-only" color="danger" (click)="increment()">
+          <ion-icon name="add-circle-outline" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+    <!-- <div style="display: flex; align-items: center; justify-content: center;">
+      <ion-buttons slot="start">
+        <ion-fab-button size="small" color="secondary" (click)="decrement()">-</ion-fab-button>
+        &nbsp; <ion-label>{{ itemCount }}</ion-label> &nbsp;
+        <ion-fab-button size="small" color="secondary" (click)="increment()">+</ion-fab-button>
+      </ion-buttons>
+    </div> -->
   </ion-toolbar>
 
   <ion-list>
-    <div *ngIf="ingredients.length > 0">
+    <div *ngIf="extraIngredients.length > 0">
       <ion-item-group>
         <ion-item-divider>
           <ion-label>
             Add
           </ion-label>
         </ion-item-divider>
-        <ion-item *ngFor="let ingredient of ingredients">
+        <ion-item *ngFor="let ingredient of extraIngredients">
           <ion-label>
             <h2>Extra {{ ingredient.title }}</h2>
             <p>{{ ingredient.price | currency }}</p>
           </ion-label>
-          <ion-checkbox slot="end" [(ngModel)]="ingredient.isChecked" (click)="toggleIngredient(ingredient)">
+          <ion-checkbox slot="end" color="danger" [(ngModel)]="ingredient.isChecked" (click)="toggleExtras(ingredient)">
           </ion-checkbox>
         </ion-item>
       </ion-item-group>
@@ -52,11 +69,11 @@
             Remove
           </ion-label>
         </ion-item-divider>
-        <ion-item *ngFor="let ingredient of ingredients">
+        <ion-item *ngFor="let ingredient of removeIngredients">
           <ion-label>
             <h2>No {{ ingredient.title }}</h2>
           </ion-label>
-          <ion-checkbox slot="end" [(ngModel)]="ingredient.isChecked" (click)="toggleIngredient(ingredient)">
+          <ion-checkbox slot="end" [(ngModel)]="ingredient.isChecked" (click)="toggleRemoves(ingredient)">
           </ion-checkbox>
         </ion-item>
       </ion-item-group>
