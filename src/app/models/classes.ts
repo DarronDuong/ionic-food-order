@@ -6,6 +6,8 @@ export class MenuItem {
     amount?: number = 0
     price: number = 0
     ingredients: number[] = []
+    extras?: string[] = [] //set client side
+    removes?: string[] = [] //set client side
 }
 
 export class ItemIngredient {
@@ -13,7 +15,7 @@ export class ItemIngredient {
     title: string = ''
     category: IngredientCategory
     price: number = 0
-    isChecked: boolean = false
+    isChecked?: boolean = false
 }
 
 export enum IngredientCategory {
