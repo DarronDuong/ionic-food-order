@@ -1,0 +1,20 @@
+<ion-card>
+  <ion-card-header>
+    <ion-list lines="full">
+      <ion-item>
+        <ion-card-subtitle><strong>Payment Method</strong></ion-card-subtitle>
+      </ion-item>
+    </ion-list>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-thumbnail slot="start" style="height:20px; width: 30px">
+          <img src="./assets/icon/mastercard-logo.jpg">
+        </ion-thumbnail>
+        <h4>Card ending 1234 </h4>
+        <ion-button color="danger" fill="outline" slot="end" (click)="changePaymentMethod()">Change</ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
