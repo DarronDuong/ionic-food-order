@@ -9,6 +9,9 @@ export class PaymentMethodComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
+  changePaymentMethod() {
+
+  }
 }
