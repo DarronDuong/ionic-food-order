@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add credit card</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-list lines="full">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-input placeholder="Card Holder"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-input placeholder="Card Number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-input placeholder="Exp. Date"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-input placeholder="CVV"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-icon name="shield-checkmark-outline" size="small" color="medium"></ion-icon>
+        &nbsp;
+        <ion-label>
+          <p style="font-size: 10px">Your information is encrypted using industry standard
+            <br /> 256 bit SSL encryption.
+          </p>
+        </ion-label>
+      </ion-item>
+
+    </ion-list>
+    <br />
+  </ion-card>
+</ion-content>
