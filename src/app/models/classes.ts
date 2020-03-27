@@ -18,6 +18,12 @@ export class ItemIngredient {
     isChecked?: boolean = false
 }
 
+export class MenuCategory {
+    id: number = 0
+    title: string = ''
+    imageUrl: string = ''
+}
+
 export enum IngredientCategory {
     SOY_MEAT = 1,
     TOFU = 2,
@@ -40,4 +46,27 @@ export class CartItem {
     get itemPrice() {
         return this.item.price * this.amount;
     }
+}
+
+export class Order {
+    orderId: number = 0
+    orderType: OrderType = 2
+    cartItems: CartItem[] = []
+    cartPrice: number = 0
+    deliveryPrice: number = 0
+    createdOn: Date
+    modifiedOn: Date
+    status: OrderStatus = 0// 1: COMPLETE/ 0: INCOMPLETE(paid but not delivered)
+}
+
+export enum OrderStatus {
+    PREPARING = 1,
+    READY = 2,
+    DELIVERING = 3,
+    COMPLETE = 4
+}
+
+export enum OrderType {
+    PICKUP = 1,
+    DELIVERY = 2
 }
