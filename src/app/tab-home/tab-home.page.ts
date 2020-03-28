@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../services/menu.service';
 import { MenuItem } from '../models/classes';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { RootStoreState, MenuStoreSelectors } from '../root-store';
+import { Store } from '@ngrx/store';
+import { ModalController, IonRouterOutlet } from '@ionic/angular';
+import { MenuItemModal } from './modals/menu-item-modal/menu-item-modal.component';
 
 @Component({
   selector: 'app-tab-home',
@@ -11,11 +16,13 @@ import { Router } from '@angular/router';
 export class TabHomePage implements OnInit {
 
   constructor(
-    private menuService: MenuService,
-    private router: Router
+    private store$: Store<RootStoreState.AppState>,
+    private modalController: ModalController,
+    private routerOutlet: IonRouterOutlet
   ) { }
 
-  items: MenuItem[] = [];
+  items$: Observable<MenuItem[]>;
+
   slideOpts = {
     initialSlide: 0,
     spaceBetween: -15,
@@ -25,12 +32,20 @@ export class TabHomePage implements OnInit {
   };
 
   ngOnInit() {
-
-    this.items = this.menuService.getMostPopular();
-
+    this.items$ = this.store$.select(MenuStoreSelectors.getPopularItems);
   }
 
-  goToDetail(categoryId: number, itemId: number) {
-    this.router.navigate(['tabs/menu', categoryId, itemId])
+  async goToDetails(item: MenuItem) {
+
+    const modal = await this.modalController.create({
+      component: MenuItemModal,
+      componentProps: {
+        loadedItem: item
+      },
+      swipeToClose: true,
+      presentingElement: this.routerOutlet.nativeEl
+    });
+
+    return await modal.present();
   }
 }

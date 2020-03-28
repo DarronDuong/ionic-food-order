@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button color="dark"></ion-back-button>
     </ion-buttons>
     <ion-title>Profile</ion-title>
   </ion-toolbar>
@@ -9,9 +9,17 @@
 <ion-content>
   <div style="display: flex; align-items: center; justify-content: center;">
     <ion-avatar size="large" style="margin-top: 10px; width: 100px; height: 100px">
-      <img src="https://scontent.fsyd3-1.fna.fbcdn.net/v/t1.0-9/84287817_2879307845466882_8832782960722706432_n.jpg?_nc_cat=110&_nc_sid=85a577&_nc_ohc=8VDfXMqCdRIAX9OQ6T3&_nc_ht=scontent.fsyd3-1.fna&oh=3c2a71ac5bb3129ac937753b2ba28690&oe=5EA42046">
+      <img
+        src="https://scontent.fsyd3-1.fna.fbcdn.net/v/t1.0-9/84287817_2879307845466882_8832782960722706432_n.jpg?_nc_cat=110&_nc_sid=85a577&_nc_ohc=8VDfXMqCdRIAX9OQ6T3&_nc_ht=scontent.fsyd3-1.fna&oh=3c2a71ac5bb3129ac937753b2ba28690&oe=5EA42046">
     </ion-avatar>
   </div>
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label>Is Admin</ion-label>
+      <ion-toggle [ngModel]="isAdmin" (ionChange)="toggleRole()"></ion-toggle>
+    </ion-item>
+  </ion-list>
+  <br />
   <ion-card>
     <ion-item>
       <ion-label position="stacked">Name</ion-label>
@@ -21,6 +29,11 @@
     <ion-item>
       <ion-label position="stacked">Email address</ion-label>
       <ion-input value="tuantrung1512@gmail.com"></ion-input>
+    </ion-item>
+    <br />
+    <ion-item>
+      <ion-label position="stacked">Delivery address</ion-label>
+      <ion-input value="1 John Street, Dickson, 2150, ACT"></ion-input>
     </ion-item>
     <br />
     <ion-item>

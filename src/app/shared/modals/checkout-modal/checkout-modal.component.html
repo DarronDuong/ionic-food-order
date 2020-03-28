@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <!-- <ion-back-button></ion-back-button> -->
+      <ion-button slot="icon-only" (click)="closeCheckOut()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+    <!-- <ion-thumbnail slot="start" style="height:60px; width: 100%">
+      <img src="./assets/icon/aulac-logo.jpg">
+    </ion-thumbnail> -->
+    <!-- <ion-title>Checkout</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <coupon></coupon>
+  <shopping-cart [cartItems]="cartItems$ | async" (clearCartClick)="clearCart()" (valueChange)="onValueChange($event)">
+  </shopping-cart>
+  <payment-method></payment-method>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" color="dark" (click)="pay()">
+    Pay Now &nbsp; - &nbsp; {{ totalPrice | currency }}
+  </ion-button>
+</ion-footer>

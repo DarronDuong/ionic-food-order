@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MenuService } from 'src/app/services/menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemIngredient, MenuItem, CartItem } from 'src/app/models/classes';
 import { CartService } from 'src/app/services/cart.service';
 import { deepCopy } from 'src/app/utils/utils-functions';
+import { ToastController, ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { RootStoreState, MenuStoreSelectors, CartStoreActions } from 'src/app/root-store';
+import { Store } from '@ngrx/store';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-menu-item',
@@ -12,20 +18,27 @@ import { deepCopy } from 'src/app/utils/utils-functions';
 })
 export class MenuItemComponent implements OnInit {
 
-  loadedItem: MenuItem = new MenuItem();
-  itemCount: number = 1;
+  loadedItem$: Observable<MenuItem>;
+  // itemCount: number = 1;
+  // loadedItem: MenuItem = new MenuItem();
+  // extraIngredients: ItemIngredient[] = [];
+  // removeIngredients: ItemIngredient[] = [];
 
-  extraIngredients: ItemIngredient[] = [];
-  removeIngredients: ItemIngredient[] = [];
+  // itemPrice: number = 0;
 
-  itemPrice: number = 0;
+  totalPrice: number = 0;
+
+  @Input() loadedItem: MenuItem = new MenuItem();
+
+  // @ViewChild(ItemDetailsComponent, { static: false }) public itemDetails: ItemDetailsComponent;
+  private cartItem: CartItem = new CartItem();
 
   constructor(
-    private menuService: MenuService,
+    private store$: Store<RootStoreState.AppState>,
     private activatedRoute: ActivatedRoute,
-    private cartService: CartService,
-    private router: Router
-  ) { }
+    private notificationService: NotificationService,
+    private modalCtrl: ModalController,
+    private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
@@ -33,49 +46,26 @@ export class MenuItemComponent implements OnInit {
         return;
       }
       const itemId = +paramMap.get('itemId');
-      this.loadedItem = this.menuService.getMenuItem(itemId);
-      this.loadedItem.extras = [];
-      this.loadedItem.removes = [];
-      this.extraIngredients = this.menuService.getIngredients(this.loadedItem.ingredients);
-      this.removeIngredients = deepCopy(this.extraIngredients);
-
-      this.itemPrice = this.loadedItem.price;
-    })
-  }
-
-  decrement() {
-    if (this.itemCount > 1) {
-      this.itemCount--;
-    }
-  }
-
-  increment() {
-    this.itemCount++;
-  }
-
-  toggleExtras(selectedIngredient: ItemIngredient) {
-    if (!selectedIngredient.isChecked) {
-      this.itemPrice = this.itemPrice + selectedIngredient.price;
-      this.loadedItem.extras.push(selectedIngredient.title);
-    } else {
-      this.itemPrice = this.itemPrice - selectedIngredient.price;
-      this.loadedItem.extras = this.loadedItem.extras.filter(c => c !== selectedIngredient.title);
-    }
-  }
-
-  toggleRemoves(selectedIngredient: ItemIngredient) {
-    if (!selectedIngredient.isChecked) {
-      this.loadedItem.removes.push(selectedIngredient.title);
-    } else {
-      this.loadedItem.removes = this.loadedItem.removes.filter(c => c !== selectedIngredient.title);
-    }
+      this.loadedItem$ = this.store$.select(MenuStoreSelectors.getItem, { itemId })// this.menuService.getMenuItem(itemId)
+        .pipe(tap(item => {
+          this.cartItem.item = item;
+          this.cartItem.amount = 1;
+          this.totalPrice = item.price;
+        }));
+    });
   }
 
   addToCart() {
-    const cartItem = new CartItem();
-    cartItem.item = this.loadedItem;
-    cartItem.amount = this.itemCount;
-    this.cartService.addToCart(cartItem);
+    if (!this.cartItem) return;
+
+    this.store$.dispatch(CartStoreActions.addItem({ item: this.cartItem }));
+    this.notificationService.show('Item has been added to cart');
     this.router.navigate(['tabs/menu']);
   }
+
+  onValueChange(cartItem: CartItem) {
+    this.cartItem = cartItem;
+    this.totalPrice = cartItem.itemPrice;
+  }
 }
+

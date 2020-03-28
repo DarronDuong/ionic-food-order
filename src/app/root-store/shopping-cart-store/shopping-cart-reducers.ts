@@ -19,17 +19,25 @@ const _cartReducer = createReducer(
 
     on(CartActions.addItem, (state, { item }) => ({
         ...state,
-        cartItems: state.cartItems.concat([item])
+        cartItems: state.cartItems.concat([item]),
+        cartPrice: state.cartItems.concat([item]).reduce((a, b) => +a + +b.itemPrice, 0)
     })),
 
     on(CartActions.removeItem, (state, { itemId }) => ({
         ...state,
-        cartItems: state.cartItems.filter(x => x.item.id !== itemId)
+        cartItems: state.cartItems.filter(x => x.item.id !== itemId),
+        cartPrice: state.cartItems.filter(x => x.item.id !== itemId).reduce((a, b) => +a + +b.itemPrice, 0)
     })),
 
     on(CartActions.updateAmount, (state, { item }) => ({
         ...state,
         cartItems: state.cartItems.map(s => [item].find(x => x.item.id === s.item.id) || s)
+    })),
+
+    on(CartActions.updateCart, (state, { items }) => ({
+        ...state,
+        cartItems: items,
+        cartPrice: items.reduce((a, b) => +a + +b.itemPrice, 0)
     })),
 
     on(CartActions.payCart, state => ({
@@ -52,7 +60,8 @@ const _cartReducer = createReducer(
 
     on(CartActions.clearCart, state => ({
         ...state,
-        cartItems: []
+        cartItems: [],
+        cartPrice: 0
     })),
 
     on(CartActions.loadOrders, state => ({
@@ -142,13 +151,7 @@ const _cartReducer = createReducer(
         ...state,
         isProcessing: false,
         error
-    })),
-
-    on(CartActions.clearCart, state => ({
-        ...state,
-        cartItems: []
-    })),
-
+    }))
 )
 
 

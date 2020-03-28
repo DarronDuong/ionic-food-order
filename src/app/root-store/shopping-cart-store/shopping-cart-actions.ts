@@ -5,6 +5,7 @@ export enum CartActionTypes {
     ADD_ITEM = '[Cart] Add Item',
     REMOVE_ITEM = '[Cart] Remove Item',
     UPDATE_AMOUNT = '[Cart] Update Amount',
+    UPDATE_CART = '[Cart] Update',
     CLEAR_CART = '[Cart] Clear',
 
     PAY_CART = '[Cart] Pay',
@@ -47,6 +48,15 @@ export const updateAmount = createAction(
     props<{ item: CartItem }>()
 );
 
+export const updateCart = createAction(
+    CartActionTypes.UPDATE_CART,
+    props<{ items: CartItem[] }>()
+);
+
+export const clearCart = createAction(
+    CartActionTypes.CLEAR_CART
+);
+
 export const loadOrders = createAction(
     CartActionTypes.ORDERS_REQUEST,
     props<{ userId: number }>()
@@ -76,11 +86,6 @@ export const payCartFailure = createAction(
     CartActionTypes.PAY_CART_FAILURE,
     props<{ error: string }>()
 );
-
-export const clearCart = createAction(
-    CartActionTypes.CLEAR_CART
-);
-
 
 //#region PROCESSING ORDER
 

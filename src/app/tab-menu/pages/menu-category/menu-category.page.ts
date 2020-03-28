@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from 'src/app/services/menu.service';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { MenuItem, MenuCategory } from 'src/app/models/classes';
 
 @Component({
   selector: 'app-menu-category',
@@ -9,8 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MenuCategoryPage implements OnInit {
 
-  loadedCategory: any;
-  menuItems: any[] = [];
+  loadedCategory$: Observable<MenuCategory>;
+  menuItems$: Observable<MenuItem[]>;
   constructor(
     private menuService: MenuService,
     private activatedRoute: ActivatedRoute
@@ -22,8 +24,12 @@ export class MenuCategoryPage implements OnInit {
         return;
       }
       const categoryId = +paramMap.get('categoryId');
-      this.loadedCategory = this.menuService.getCategory(categoryId);
-      this.menuItems = this.menuService.getCategoryMenuItems(categoryId);
+      this.loadedCategory$ = this.menuService.getCategory(categoryId);
+      this.menuItems$ = this.menuService.getCategoryMenuItems(categoryId);
     })
+  };
+
+  onSearch(query){
+
   }
 }

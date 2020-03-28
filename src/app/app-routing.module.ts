@@ -23,9 +23,13 @@ const routes: Routes = [
     loadChildren: () => import('./tab-more/tab-more.module').then( m => m.TabMorePageModule)
   },
   {
-    path: 'checkout',
-    loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
-  }
+    path: 'tab-admin',
+    loadChildren: () => import('./tab-admin/tab-admin.module').then( m => m.TabAdminPageModule)
+  },
+  // {
+  //   path: 'checkout',
+  //   loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
+  // }
 ];
 @NgModule({
   imports: [

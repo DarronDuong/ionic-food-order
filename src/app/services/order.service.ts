@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Order, OrderStatus } from '../models/classes';
+import { Order, OrderStatus, CartItem } from '../models/classes';
 import { of } from 'rxjs';
 
 @Injectable({
@@ -7,7 +7,34 @@ import { of } from 'rxjs';
 })
 export class OrderService {
 
-  private orders: Order[] = [];
+  private orders: Order[] = [
+    {
+      orderId: 1,
+      orderType: 2,
+      cartItems: [
+        {
+          item: {
+            id: 31,
+            categoryId: 3,
+            title: "Laksa (Spicy)",
+            imageUrl: "assets/menu-photos/LAKSA.jpg",
+            amount: null,
+            price: 14.5,
+            ingredients: [1, 4, 5, 6, 7, 8, 10, 11],
+            extras: ["Broccoli", "Tofu"],
+            removes: [],
+          },
+          amount: 1,
+          itemPrice: 14.5
+        }
+      ] as CartItem[],
+      cartPrice: 29,
+      deliveryPrice: 0,
+      status: OrderStatus.COMPLETE,
+      createdOn: new Date(),
+      modifiedOn: new Date()
+    }
+  ];
 
   constructor() { }
 

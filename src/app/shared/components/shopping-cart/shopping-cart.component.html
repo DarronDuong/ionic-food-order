@@ -3,13 +3,13 @@
     <ion-list lines="full">
       <ion-item>
         <ion-card-subtitle><strong>Order</strong></ion-card-subtitle>
-        <ion-button color="danger" fill="outline" slot="end">Clear</ion-button>
+        <ion-button color="danger" fill="outline" slot="end" (click)="clearCart()">Clear</ion-button>
       </ion-item>
     </ion-list>
   </ion-card-header>
   <ion-card-content>
     <ion-list lines="none">
-      <ion-item *ngIf="cart?.cartItems?.length == 0">
+      <ion-item *ngIf="cartItems?.length == 0">
         <ion-label>
           <h5>You haven't added any item</h5>
         </ion-label>
@@ -17,17 +17,17 @@
       </ion-item>
     </ion-list>
     <ion-list lines="full">
-      <ion-item-sliding *ngFor="let cartItem of cart?.cartItems">
+      <ion-item-sliding *ngFor="let cartItem of cartItems">
         <ion-item>
           <ion-label>
-            <h2>{{cartItem.amount}} x {{ cartItem.item.title }}</h2>
-            <h4 *ngFor="let c of cartItem.item.extras">
+            <h2>{{cartItem?.amount}} x {{ cartItem?.item?.title }}</h2>
+            <h4 *ngFor="let c of cartItem?.item?.extras">
               1 x Extra {{ c }}
             </h4>
-            <h4 *ngFor="let c of cartItem.item.removes">
+            <h4 *ngFor="let c of cartItem?.item?.removes">
               1 x No {{ c }}
             </h4>
-            <p>{{ cartItem.itemPrice | currency }}</p>
+            <p>{{ cartItem?.itemPrice | currency }}</p>
           </ion-label>
           <ion-buttons slot="end">
             <ion-button slot="icon-only" color="success" (click)="decrement(cartItem)">

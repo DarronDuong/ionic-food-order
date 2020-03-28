@@ -39,43 +39,50 @@ export class MenuService {
       ingredientId: 1,
       title: 'Soy Chicken',
       category: IngredientCategory.SOY_MEAT,
-      price: 3
+      price: 3,
+      isChecked: false
     },
     {
       ingredientId: 2,
       title: 'Soy Beef',
       category: IngredientCategory.SOY_MEAT,
-      price: 3
+      price: 3,
+      isChecked: false
     },
     {
       ingredientId: 3,
       title: 'Soy Duck',
       category: IngredientCategory.SOY_MEAT,
-      price: 3
+      price: 3,
+      isChecked: false
     },
     {
       ingredientId: 4,
       title: 'Tofu',
       category: IngredientCategory.TOFU,
-      price: 3
+      price: 3,
+      isChecked: false
     },
     {
       ingredientId: 5,
       title: 'Broccoli',
       category: IngredientCategory.VEGETABLE,
-      price: 2
+      price: 2,
+      isChecked: false
     },
     {
       ingredientId: 6,
       title: 'Carrot',
       category: IngredientCategory.VEGETABLE,
-      price: 2
+      price: 2,
+      isChecked: false
     },
     {
       ingredientId: 7,
       title: 'Bok Choy',
       category: IngredientCategory.VEGETABLE,
-      price: 2
+      price: 2,
+      isChecked: false
     },
     {
       ingredientId: 8,
@@ -87,19 +94,22 @@ export class MenuService {
       ingredientId: 9,
       title: 'Rice Noodle',
       category: IngredientCategory.NOODLES,
-      price: 2
+      price: 2,
+      isChecked: false
     },
     {
       ingredientId: 10,
       title: 'Yellow Noodle',
       category: IngredientCategory.NOODLES,
-      price: 2
+      price: 2,
+      isChecked: false
     },
     {
       ingredientId: 11,
       title: 'Rice Vermicelli',
       category: IngredientCategory.NOODLES,
-      price: 2
+      price: 2,
+      isChecked: false
     }
   ];
 
@@ -251,6 +261,6 @@ export class MenuService {
 
   getMostPopular() {
     const populars = [1, 2, 3, 5, 31, 32];
-    return this.menuItems.filter(i => populars.includes(i.id));
+    return of(this.menuItems.filter(i => populars.includes(i.id)));
   }
 }

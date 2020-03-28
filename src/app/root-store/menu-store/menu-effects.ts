@@ -45,6 +45,19 @@ export class MenuStoreEffects {
         )
     );
 
+    loadPopularItems$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(MenuActions.loadPopularItems),
+            mergeMap(action => {
+                return this.menuService.getMostPopular()
+                    .pipe(
+                        map((items: MenuItem[]) => MenuActions.loadPopularItemsSuccess({ items })),
+                        catchError(error => of(MenuActions.loadPopularItemsFailure({ error })))
+                    );
+            })
+        )
+    );
+
     loadIngredients$ = createEffect(() =>
         this.actions$.pipe(
             ofType(MenuActions.loadIngredients),

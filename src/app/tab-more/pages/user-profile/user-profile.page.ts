@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,7 +9,12 @@ import { Router } from '@angular/router';
 })
 export class UserProfilePage implements OnInit {
 
-  constructor(private router: Router) { }
+  isAdmin = true;
+  constructor(
+    private router: Router,
+    private notificationService: NotificationService
+  ) { }
+
 
   ngOnInit() {
   }
@@ -19,5 +25,14 @@ export class UserProfilePage implements OnInit {
 
   removeCard() {
 
+  }
+
+  toggleRole() {
+    this.isAdmin = !this.isAdmin;
+    if (this.isAdmin) {
+      this.notificationService.show('Admin mode is ON');
+    } else {
+      this.notificationService.show('Admin mode is OFF');
+    }
   }
 }

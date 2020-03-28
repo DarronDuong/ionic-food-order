@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AppResolver } from '../services/resolvers/app-resolver.service';
+import { OrderResolver } from '../services/resolvers/order-resolver.service';
 
 const routes: Routes = [
   {
@@ -12,8 +14,16 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab-home/tab-home.module').then(m => m.TabHomePageModule)
+            loadChildren: () => import('../tab-home/tab-home.module').then(m => m.TabHomePageModule)
+          }
+        ]
+      },
+      {
+        path: 'admin',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../tab-admin/tab-admin.module').then(m => m.TabAdminPageModule)
           }
         ]
       },
@@ -22,8 +32,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab-menu/tab-menu.module').then(m => m.TabMenuPageModule)
+            loadChildren: () => import('../tab-menu/tab-menu.module').then(m => m.TabMenuPageModule)
           }
         ]
       },
@@ -32,44 +41,35 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab-order/tab-order.module').then(m => m.TabOrderPageModule)
+            loadChildren: () => import('../tab-order/tab-order.module').then(m => m.TabOrderPageModule)
           }
-        ]
+        ],
+        resolve: [OrderResolver]
       },
       {
         path: 'more',
         children: [
           {
             path: '',
-            loadChildren: () =>
-              import('../tab-more/tab-more.module').then(m => m.TabMorePageModule)
+            loadChildren: () => import('../tab-more/tab-more.module').then(m => m.TabMorePageModule)
           }
         ]
       },
-      // {
-      //   path: 'tab3',
-      //   children: [
-      //     {
-      //       path: '',
-      //       loadChildren: () =>
-      //         import('../tab3/tab3.module').then(m => m.Tab3PageModule)
-      //     }
-      //   ]
-      // },
       {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
       }
-    ]
+    ],
+    resolve: [AppResolver]
   },
+
   {
     path: '',
     redirectTo: '/tabs/home',
     pathMatch: 'full'
-  }
-];
+  },
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

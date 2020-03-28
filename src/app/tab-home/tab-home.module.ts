@@ -7,14 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { TabHomePageRoutingModule } from './tab-home-routing.module';
 
 import { TabHomePage } from './tab-home.page';
+import { SharedModule } from '../shared/shared.module';
+import { MenuItemModal } from './modals/menu-item-modal/menu-item-modal.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     TabHomePageRoutingModule
   ],
-  declarations: [TabHomePage]
+  declarations: [TabHomePage, MenuItemModal],
+  entryComponents: [MenuItemModal]
 })
-export class TabHomePageModule {}
+export class TabHomePageModule { }

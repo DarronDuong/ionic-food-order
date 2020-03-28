@@ -16,6 +16,11 @@ export const getMenuItems = createSelector(
     (state: MenuState) => state.items
 );
 
+export const getItem = createSelector(
+    selectMenuFeature,
+    (state: MenuState, { itemId }) => state.items.find(i => i.id === itemId)
+);
+
 export const getCategoryItems = createSelector(
     selectMenuFeature,
     (state: MenuState, { categoryId }) => state.items.filter(i => i.categoryId === categoryId)

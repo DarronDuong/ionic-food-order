@@ -5,9 +5,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from 'src/environments/environment';
-import { MenuStoreModule, ShoppingCartStoreModule } from '.';
+import { MenuStoreModule } from './menu-store/menu-store.module';
+import { ShoppingCartStoreModule } from './shopping-cart-store/shopping-cart-store.module';
 import { UserStoreModule } from './user-store/user-store.module';
-
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import { UserStoreModule } from './user-store/user-store.module';
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
-      name: "Scholarship Admin",
+      name: "Ionic Food Order",
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
@@ -30,7 +30,7 @@ import { UserStoreModule } from './user-store/user-store.module';
     // import all feature store module below
     MenuStoreModule,
     ShoppingCartStoreModule,
-    UserStoreModule,
+    UserStoreModule
   ]
 })
 export class RootStoreModule { }

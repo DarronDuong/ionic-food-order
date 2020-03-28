@@ -1,24 +1,26 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs/menu"></ion-back-button>
+      <ion-back-button color="dark" defaultHref="tabs/menu"></ion-back-button>
     </ion-buttons>
     <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
-
   <ion-grid no-padding>
-    <ion-row>
+    <ion-row *ngIf="loadedCategory$ | async as loadedCategory">
       <ion-thumbnail style="width: 100%; height: 250px;">
-        <img  [src]="loadedCategory?.imageUrl">
+        <img [src]="loadedCategory?.imageUrl">
       </ion-thumbnail>
+    </ion-row>
+    <br />
+    <ion-row>
+      <ion-searchbar (ionChange)="onSearch()"></ion-searchbar>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-list>
+        <ion-list *ngIf="menuItems$ | async as menuItems">
           <ion-item *ngFor="let item of menuItems" [routerLink]="['./', item?.id]">
             <ion-thumbnail slot="start">
               <img src="{{item?.imageUrl}}">
